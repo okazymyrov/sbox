@@ -18,8 +18,6 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #***************************************************************************** 
 
-load os.environ['SBOX_ROOT'] + "/Experimentals/GSbox.sage"
-
 def gen_APN6(self, **kwargs):
     r"""
     Generate APN function for ``n=m=6``

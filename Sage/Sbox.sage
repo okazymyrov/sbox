@@ -53,25 +53,17 @@ class Sbox(SageObject):
     by a Polynomial Ring in ``x`` over Finite Field in ``a`` of size ``2^n`` with 
     primitive element ``g``.
     
-    EXAMPLE:
+    EXAMPLE::
     
-    We consider the S-box of the block cipher AES [AES]_::
+    We consider a small S-box::
 
         sage: sbox=[1,2,3,0,7,6,5,4]
         sage: S=Sbox(n=3,m=3,sbox=[1,2,3,0,7,6,5,4])
         sage: S.get_sbox()
         [1, 2, 3, 0, 7, 6, 5, 4]
 
-    
     Note that by default bits are interpreted in little endian
     notation.
-    
-    REFERENCES:
-
-        .. [AES] FIPS, PUB. "197: Specification for the Advanced Encryption
-        Standard, 2001." http://www.csrc.nist.gov/publications/fips/fips197/fips-197.pdf
-        4 (2009): 17-18.
-
     """
 
     def __init__(self, n=None, m=None, **kwargs):
@@ -327,16 +319,12 @@ class Sbox(SageObject):
         self._S = None
         self._LFoEA = [None,None,None,None,None]
 
-        methods=dict(AI=self._AI, # experemental
-                APN6=self._APN6,
-                claude_matrix=self._claude_matrix, # experemental
+        methods=dict(APN6=self._APN6,
                 dobbertin=self._dobbertin,
                 dickson=self._dickson,
                 gold=self._gold,
                 inverse=self._inverse,
                 kasami=self._kasami,
-                lilia=self._lilia, # experemental
-                lilia_base=self._lilia_base, # experemental
                 niho=self._niho,
                 OP4=self._OP4,
                 polynomial=self._EA,
@@ -799,9 +787,6 @@ class Sbox(SageObject):
     SAC=cr_SAC
     SSI=cr_SSI
 
-    IsEquivalentToPermutation=cr_IsEquivalentToPermutation # experemental
-    is_EA_equivalent=cr_is_EA_equivalent # experemental
-
     # Functions from GSbox.sage
 
     _APN6=gen_APN6
@@ -817,8 +802,3 @@ class Sbox(SageObject):
     _random_permutation=gen_random_permutation
     _random_substitution=gen_random_substitution
     _welch=gen_welch
-
-    _claude_matrix=gen_e_claude_matrix # experemental
-    _AI=gen_e_AI # experemental
-    _lilia=gen_e_lilia # experemental
-    _lilia_base=gen_e_lilia_base # experemental

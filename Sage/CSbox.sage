@@ -20,8 +20,6 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #***************************************************************************** 
 
-load os.environ['SBOX_ROOT'] + "/Experimentals/CSbox.sage"
-
 def cr_absolute_indicator(self):
     r"""
     Return the maximum value of the autocorrelation spectrum
@@ -57,11 +55,11 @@ def cr_is_balanced(self):
     EXAMPLE::
 
         sage: S=Sbox(n=3,m=3,sbox=[5,0,1,1,2,3,7,6])
-        sage: S.balanced()
+        sage: S.is_balanced()
         False
 
         sage: S.generate_sbox(method='random_permutation')
-        sage: S.balanced()
+        sage: S.is_balanced()
         True
     """
 
@@ -578,7 +576,7 @@ def cr_is_bijection(self):
         sage: S.is_bijection()
         False
 
-        sage: S.balanced()
+        sage: S.is_balanced()
         True
     """
     if self._n == self._m:
@@ -827,7 +825,7 @@ def cr_resilient(self):
 
     """
 
-    if c_balanced(self._S,self._length,self._m):
+    if c_is_balanced(self._S,self._length,self._m):
         return c_CI(self._S,self._length)
 
     return False

@@ -28,7 +28,7 @@ def test_temp(**kargs):
 
     print "Sbox\t\t\t\t= {0}".format(S.get_sbox())
     print "Characteristics of boolean functions:"
-    print "Balanced\t\t\t= {0}".format(S.balanced())
+    print "Balanced\t\t\t= {0}".format(S.is_balanced())
     print "Nonlinearity\t\t\t= {0}".format(S.NL())
     print "Absolute indicator\t\t= {0}".format(S.absolute_indicator())
     print "Propagation criterion\t\t= {0}".format(S.PC())
@@ -66,7 +66,7 @@ def test_all_functions(**kargs):
         S.set_sbox(sbox)
         print "Sbox\t\t\t\t= {0}".format(S.get_sbox())
         print "Characteristics of boolean functions:"
-        print "Balanced\t\t\t= {0}".format(S.balanced())
+        print "Balanced\t\t\t= {0}".format(S.is_balanced())
         print "Nonlinearity\t\t\t= {0}".format(S.NL())
         print "Absolute indicator\t\t= {0}".format(S.absolute_indicator())
         print "Propagation criterion\t\t= {0}".format(S.PC())
