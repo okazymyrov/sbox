@@ -1,0 +1,71 @@
+r"""
+    The interface for calling "cpp" functions
+
+AUTHORS:
+
+- Oleksandr Kazymyrov (2013-04-26): initial version
+
+- Anna Maria Eilertsen, Oleksandr Kazymyrov (2013-08-14): updated description
+"""
+
+#*****************************************************************************
+#       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
+#
+#  Distributed under the terms of the GNU General Public License (GPL)
+#  as published by the Free Software Foundation; either version 2 of
+#  the License, or (at your option) any later version.
+#                  http://www.gnu.org/licenses/
+#*****************************************************************************    
+
+#clang c++
+#cinclude $SBOX_ROOT/CPP/
+#cfile ./CPP/Cycles.cpp
+
+import os
+from sage.all import ZZ
+
+from libcpp.map cimport map as mMap
+from libcpp.vector cimport vector
+
+from libc.stdlib cimport malloc
+from libc.stdlib cimport free
+
+ctypedef vector[long long]* pV
+
+cdef extern from "Cycles.h":
+    mMap[long long, pV] findCycles(long long sbox[], long long s)
+
+def cpp_cycles(pSbox,length):
+    r"""
+    Find chains and cycles in an array.
+
+    It is a convenience function and connects cr_cycles() in CSbox with 
+    findCycles() in Cycles.cpp
+    
+    INPUT::
+
+        - ``pSbox`` -- array of integers
+        - ``length`` -- length of array
+        
+    """
+    cdef mMap[long long, pV] cycles
+    cdef long long *cSbox = <long long *>malloc(length*sizeof(long long))
+
+    for i in xrange(length):
+        cSbox[i] = pSbox[i]
+
+    cycles = findCycles(cSbox, length)
+
+    free(cSbox)
+
+    ret = []
+
+    for i in xrange (1,cycles.size()+1):
+        ret.append([])
+        if not cycles[i].empty():
+            for j in xrange (cycles[i].size()):
+                ret[i-1].append(ZZ(cycles[i].at(j)))
+
+    ret.sort(key=lambda c: len(c))
+
+    return ret 
