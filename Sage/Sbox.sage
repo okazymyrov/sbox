@@ -616,8 +616,8 @@ class Sbox(SageObject):
 
         g_pol = ""
         for i in xrange(self._length-1,1,-1):
-            t = pol[i].log(self._K.multiplicative_generator())
             if pol[i] != 0:
+                t = pol[i].log(self._K.multiplicative_generator())
                 if t == 1:
                     g_pol += "g*x^{0} + ".format(i)
                 elif t == 0:
@@ -625,8 +625,8 @@ class Sbox(SageObject):
                 else:
                     g_pol += "g^{0}*x^{1} + ".format(t,i)
 
-        t = pol[1].log(self._K.multiplicative_generator())
         if pol[1] != 0:
+            t = pol[1].log(self._K.multiplicative_generator())
             if t == 1:
                 g_pol += "g*x + "
             elif t == 0:
@@ -634,8 +634,8 @@ class Sbox(SageObject):
             else:
                 g_pol += "g^{0}*x + ".format(t)
 
-        t = pol[0].log(self._K.multiplicative_generator())
         if pol[0] != 0:
+            t = pol[0].log(self._K.multiplicative_generator())
             if t == 1:
                 g_pol += "g"
             elif t == 0:
