@@ -9,6 +9,7 @@ AUTHORS:
 
 /*****************************************************************************
  *       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
+*							Maxim Storetvedt <maxim.storetvedt@student.uib.no>
  *
  *  Distributed under the terms of the GNU General Public License (GPL)
  *  as published by the Free Software Foundation; either version 2 of

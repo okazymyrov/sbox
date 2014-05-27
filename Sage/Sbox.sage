@@ -776,6 +776,7 @@ class Sbox(SageObject):
     is_balanced=cr_is_balanced
     is_bijection=cr_is_bijection
     is_CCZ_equivalent=cr_is_CCZ_equivalent
+    fixed_points=cr_fixed_points
     MDT=cr_MDT
     maximal_difference_probability=cr_maximal_difference_probability
     maximal_linear_bias=cr_maximal_linear_bias

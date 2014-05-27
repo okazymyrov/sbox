@@ -663,6 +663,25 @@ def cr_is_CCZ_equivalent(self,F=None,G=None):
 
     return CF.is_permutation_equivalent(CG)
 
+def cr_fixed_points(self):
+    r"""
+    Return the list of fixed points
+
+    EXAMPLE::
+
+        sage: S=Sbox(n=5,m=5)
+        sage: S.random_substitution()
+        sage: S.fixed_points() # random
+        []
+
+        sage: S=Sbox(n=3,m=3)
+        sage: S.set_sbox([0,5,1,3,4,2,6,7])
+        sage: S.fixed_points()
+        [0,3,4,6,7]
+    """
+
+    return cpp_fixed_points(self._S,self._length)
+
 def cr_MDT(self,addition='XOR'):
     r"""
     Return the maximum value of differential table.

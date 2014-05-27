@@ -1,15 +1,14 @@
 /*
-	Finds cycles in a given array
+	Finds fixed point in a given substitution
 
 AUTHORS:
 
-- Maxim Storetvedt (2013-04-26): initial version
+- Oleksandr Kazymyrov (2014-05-27): initial version
 
 */
 
 /*****************************************************************************
  *       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
- *							Maxim Storetvedt <maxim.storetvedt@student.uib.no>
  *
  *  Distributed under the terms of the GNU General Public License (GPL)
  *  as published by the Free Software Foundation; either version 2 of
@@ -17,12 +16,22 @@ AUTHORS:
  *                  http://www.gnu.org/licenses/
  ****************************************************************************/
 
-#include <cstdlib>
-#include <iostream>
-#include <vector>
-#include <map>
-#include <math.h>
-using namespace std;
+#include "FixedPoints.h"
 
-map<long long, vector<long long>*> findCycles(long long[],long long);
-bool joinCycle (vector<long long>*,vector<long long>*);
+/*
+ *Find cycles in a given array.
+ */
+vector<unsigned long long> fixedPoints(unsigned long long sbox[], unsigned long long length)
+{
+	vector<unsigned long long> fPoints;
+
+	for(unsigned long long i = 0; i < length; i++)
+	{
+		if(sbox[i] == i)
+		{
+			fPoints.push_back(i);
+		}
+	}
+
+	return fPoints;
+}
