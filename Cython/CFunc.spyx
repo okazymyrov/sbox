@@ -206,7 +206,7 @@ def c_MDT(pSbox,length,TableSize):
 
     return ZZ(ret_val)
 
-def c_minimum_degree(pSbox,length):
+def c_minimum_degree(pSbox,n,m):
     r"""
     Return the minimum degree of substitution
     
@@ -216,18 +216,21 @@ def c_minimum_degree(pSbox,length):
     INPUT::
     
         - ``pSbox`` -- array of integers
-        - ``length`` -- length of array 
+        - ``n``     -- number of input bits
+        - ``m``     -- number of output bits
     
     """
-    cdef char *fSbox = <char *>malloc(length*sizeof(char))
+    length_n = 1<<n
+    length_m = 1<<m
+    cdef char *fSbox = <char *>malloc(length_n*sizeof(char))
 
     d=0
-    ret_deg = length
+    ret_deg = n
 
-    for j in xrange(1,length):
-        for i in xrange(length):
+    for j in xrange(1,length_m):
+        for i in xrange(length_n):
             fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
-        d = minimum_degree(fSbox, length)
+        d = minimum_degree(fSbox, length_n)
         if d < ret_deg:
             ret_deg=d
 

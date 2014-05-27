@@ -500,7 +500,7 @@ def gen_random_substitution(self, **kwargs):
         [2, 4, 7, 7, 4, 5, 2, 7]
 
     """
-    self._S = [randint(0,1<<self._m-1) for _ in xrange(self._length)]
+    self._S = [randint(0,(1<<self._m)-1) for _ in xrange(self._length)]
 
 def gen_random_permutation(self, **kwargs):
     r"""

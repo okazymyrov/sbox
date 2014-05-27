@@ -752,7 +752,7 @@ def cr_minimum_degree(self):
         sage: S.minimum_degree()
         2
     """
-    return c_minimum_degree(self._S,self._length)
+    return c_minimum_degree(self._S,self._n,self._m)
 
 def cr_MLT(self,addition='XOR'):
     r"""
