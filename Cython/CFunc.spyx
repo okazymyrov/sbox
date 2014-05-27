@@ -3,9 +3,9 @@ r"""
 
 AUTHORS:
 
-- Oleksandr Kazymyrov (2011): initial version
+- Oleksandr Kazymyrov (2011-06-21): initial version
 
-- Oleksandr Kazymyrov (2013-08-04): rewrite may functions
+- Oleksandr Kazymyrov (2013-08-04): rewrote many functions
 
 - Anna Maria Eilertsen, Oleksandr Kazymyrov (2013-08-14): updated description
 

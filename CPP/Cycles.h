@@ -3,9 +3,7 @@ Cycles one line description
 
 AUTHORS:
 
-- Oleksandr Kazymyrov (date in ISO year-month-day format): initial version
-
-- person (date in ISO year-month-day format): short desc
+- Maxim Storetvedt (2013-04-26): initial version
 
 */
 

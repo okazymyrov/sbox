@@ -6,11 +6,11 @@ r"""
 
 AUTHORS::
 
-- Oleksandr Kazymyrov (2011): initial version
+- Oleksandr Kazymyrov (2011-06-21): initial version
 
-- Maksim Storetvedt (2013-04-26): rewrote the function "cycles" in C
+- Maksim Storetvedt (2013-04-26): rewrote the function "cycles" in C++
 
-- Oleksandr Kazymyrov (2013-08-04): almost complete rewrite
+- Oleksandr Kazymyrov (2013-08-04): almost complete rewriting
 
 - Anna Maria Eilertsen, Oleksandr Kazymyrov (2013-08-14): added documentations
 

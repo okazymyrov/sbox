@@ -4,7 +4,7 @@
 
 AUTHORS:
 
-- Oleksandr Kazymyrov (date in ISO year-month-day format): initial version
+- Oleksandr Kazymyrov (2013-08-03): initial version
 
 */
 

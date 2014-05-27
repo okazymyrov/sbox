@@ -3,7 +3,7 @@
 
 AUTHORS:
 
-- Oleksandr Kazymyrov (2011): initial version
+- Oleksandr Kazymyrov (2013-08-03): initial version
 
 */
 
