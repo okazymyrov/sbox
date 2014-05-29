@@ -114,8 +114,9 @@ int algebraic_immunity(char **Functions, int deg, int FunctionsLength, int SboxB
 	free_matrix(Matrix,FunctionsLength);
 	
 // delete temporary functions
-	for(c=0;c<(SboxBitIn+SboxBitOut);c++)
-		free(fs[c]);
+	for(c=0;c<FunctionsLength;c++)
+		if(fs[c])
+			free(fs[c]);
 
 	if(fs)
 		free(fs);

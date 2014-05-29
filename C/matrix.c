@@ -40,7 +40,8 @@ int	free_matrix(char **m, int rows)
 	{
 		for(r=0;r<rows;r++)
 		{
-			free(m[r]);
+			if(m[r])
+				free(m[r]);
 		}
 
 		free(m);

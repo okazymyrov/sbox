@@ -22,18 +22,6 @@ load ./Sbox.sage
 def test_temp(**kargs):
     bits=kargs.get('bits',3)
 
-    # { debug 
-    for _ in xrange(10):
-        S=Sbox(n=randint(2,10),m=randint(2,10))
-        S.random_substitution()
-
-        print "Sbox\t\t\t\t= {0}".format(S.get_sbox())    
-        print "Fixed points\t\t\t= {0}".format(S.fixed_points())
-        print "="*20
-
-    return
-    # } debug
-
     S=Sbox(n=bits,m=bits)
 
     S.generate_sbox(method='APN6')

@@ -27,8 +27,8 @@ def main(argv=None):
 
     t1=cputime()
 
-    #test_all_functions(bits=bits)
-    test_temp(bits=bits)
+    test_all_functions(bits=bits)
+    #test_temp(bits=bits)
 
     t2=cputime()
 
