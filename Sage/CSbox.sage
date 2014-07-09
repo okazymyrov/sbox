@@ -682,14 +682,17 @@ def cr_fixed_points(self):
 
     return cpp_fixed_points(self._S,self._length)
 
-def cr_MDT(self,addition='XOR'):
+def cr_MDT(self,difference='XORXOR'):
     r"""
-    Return the maximum value of differential table.
+    Return the maximum value of a differential table
 
     INPUT::
     
-    - ``addition`` –- string, describes a key addition method, e.g.,
-        - ``'XOR'`` (default) --  compute difference for XOR->XOR 
+        - ``difference`` –- string, describes a key addition method:
+                            ``XORXOR`` (default) --  compute difference of XOR->XOR 
+                            ``XORADD``           --  compute difference of XOR->ADD 
+                            ``ADDXOR``           --  compute difference of ADD->XOR 
+                            ``ADDADD``           --  compute difference of ADD->ADD
 
     EXAMPLE::
 
@@ -698,24 +701,59 @@ def cr_MDT(self,addition='XOR'):
         sage: S.MDT()
         2
 
-    TODO::
+        sage: S.MDT("ADDXOR")
+        4
 
-        Implement ``XORADD``, ``ADDXOR`` and ``ADD``.
+        sage: S.MDT("XORADD")
+        4
+
+        sage: S.MDT("ADDADD")
+        4
+
+        sage: S=Sbox(n=8,m=8)
+        sage: S.generate_sbox(method='inverse')
+        sage: S.MDT()
+        4
+
+        sage: S.MDT("ADDXOR")
+        6
+
+        sage: S.MDT("XORADD")
+        6
+
+        sage: S.MDT("ADDADD")
+        6
+
+        sage: M1=matrix(GF(2),8,[[0,0,0,0,1,1,0,1],[1,0,0,0,1,1,1,1],[0,1,1,0,0,1,0,1],[1,0,1,0,1,1,0,1],[1,0,0,1,0,1,0,0],[1,1,1,0,1,0,1,1],[0,1,1,0,1,1,0,1],[0,0,0,0,1,1,1,1]])
+        sage: M2=matrix(GF(2),8,[[0,1,1,0,0,0,0,1],[1,0,0,1,0,1,0,1],[0,0,0,0,1,1,0,0],[0,0,1,1,0,0,0,0],[0,1,1,0,1,0,1,0],[0,0,0,1,1,0,0,0],[0,1,0,0,1,1,0,1],[1,1,1,0,0,1,1,0]])
+        sage: V1=vector(GF(2),8,[0, 1, 0, 0, 0, 1, 1, 1])
+        sage: V2=vector(GF(2),8,[0, 0, 1, 1, 0, 0, 0, 0])
+        sage: S.generate_sbox(method='inverse',T="A",M1=M1,M2=M2,V1=V1,V2=V2)
+        sage: S.MDT()
+        4
+
+        sage: S.MDT("ADDXOR")
+        7
+
+        sage: S.MDT("XORADD")
+        6
+
+        sage: S.MDT("ADDADD")
+        7
     """
 
-    if addition != 'XOR':
-        raise NotImplementedError("'{0}'".format(addition))
+    if difference not in ['XORXOR','XORADD','ADDXOR','ADDADD']:
+        raise NotImplementedError("'{0}'".format(difference))
 
-    return c_MDT(self._S,self._length,max(1<<self._m,self._length))
+    return c_MDT(self._S,self._n,self._m,difference)
 
-def cr_maximal_difference_probability(self,addition='XOR'):
+def cr_maximal_difference_probability(self,difference='XORXOR'):
     r"""
-    Return the maximum difference probability
+    Return the maximum value difference probability
 
     INPUT::
     
-    - ``addition`` –- string, describes a key addition method, e.g.,
-        - ``'XOR'`` (default) --  compute difference for XOR->XOR
+        - ``difference`` –- string (``XORXOR`` (default), ``XORADD``, ``ADDXOR`` and ``ADDADD``) describes a key addition method
 
     EXAMPLE::
 
@@ -724,15 +762,17 @@ def cr_maximal_difference_probability(self,addition='XOR'):
         sage: S.maximal_difference_probability()
         0.0312500000000000
 
-    TODO::
+        sage: S.maximal_difference_probability('XORADD')
+        0.0625000000000000
 
-        Implement ``XORADD``, ``ADDXOR`` and ``ADD``.
+        sage: S.maximal_difference_probability('ADDXOR')
+        0.0625000000000000
+
+        sage: S.maximal_difference_probability('ADDADD')
+        0.0625000000000000
     """
 
-    if addition != 'XOR':
-        raise NotImplementedError("'{0}'".format(addition))
-
-    return self.MDT(addition)/(2.0<<self._n)
+    return self.MDT(difference)/(2.0<<self._n)
 
 def cr_maximal_linear_bias(self,addition='XOR'):
     r"""

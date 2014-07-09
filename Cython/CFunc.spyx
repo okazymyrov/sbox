@@ -38,7 +38,10 @@ cdef extern from *:
     int PC(int k,char *f, int FunctionsLength)
     unsigned long long SumOfSquares(char *f, int FunctionsLength)
     int algebraic_immunity(char **Functions, int deg, int FunctionsLength, int SboxBitIn, int SboxBitOut)
-    unsigned long long d_uniform(unsigned long long *Sbox, unsigned long long SboxLength, unsigned long long TableSize, unsigned long long delta)
+    unsigned long long d_uniform_xor_xor(unsigned long long *Sbox, unsigned long long SboxLength, unsigned long long TableSize, unsigned long long delta)
+    unsigned long long d_uniform_add_xor(unsigned long long *Sbox, unsigned long long SboxLength, unsigned long long TableSize, unsigned long long n, unsigned long long m, unsigned long long delta)
+    unsigned long long d_uniform_xor_add(unsigned long long *Sbox, unsigned long long SboxLength, unsigned long long TableSize, unsigned long long n, unsigned long long m, unsigned long long delta)
+    unsigned long long d_uniform_add_add(unsigned long long *Sbox, unsigned long long SboxLength, unsigned long long TableSize, unsigned long long n, unsigned long long m, unsigned long long delta)
     unsigned long long c_lambda(unsigned long long *sbox, long long InLength, long long OutLength)
 
 def c_absolute_indicator(pSbox,length):
@@ -175,32 +178,44 @@ def c_is_APN(pSbox,length,TableSize):
     for i in xrange(length):
         cSbox[i] = pSbox[i]
 
-    ret_val=d_uniform(cSbox,length,TableSize,2)
+    ret_val = d_uniform_xor_xor(cSbox,length,TableSize,2)
 
     free(cSbox)
 
     return True if ret_val else False
 
-def c_MDT(pSbox,length,TableSize):
+def c_MDT(pSbox,n,m,difference):
     r"""
     Return the maximum value of differential table.
     
-    It is a convenience function and connects cr_MDT() in CSbox with 
-    d_uniform() in MDT.c
+    It is a convenience function that connects cr_MDT() in CSbox with 
+    other functions in MDT.c
     
     INPUT::
     
         - ``pSbox`` -- array of integers
-        - ``length`` -- length of array
-        - ``TableSize`` -- length of a differential table 
+        - ``n``     -- number of input bits
+        - ``m``     -- number of output bits
     
     """
+    length    = 1<<n
+    TableSize = 1<<m
+
     cdef unsigned long long *cSbox = <unsigned long long *>malloc(length*sizeof(unsigned long long))
 
     for i in xrange(length):
         cSbox[i] = pSbox[i]
 
-    ret_val=d_uniform(cSbox,length,TableSize,length)
+    if difference == 'XORXOR':
+        ret_val = d_uniform_xor_xor(cSbox,length,TableSize,length)
+    elif difference == 'ADDXOR':
+        ret_val = d_uniform_add_xor(cSbox,length,TableSize,n,m,length)
+    elif difference == 'XORADD':
+        ret_val = d_uniform_xor_add(cSbox,length,TableSize,n,m,length)
+    elif difference == 'ADDADD':
+        ret_val = d_uniform_add_add(cSbox,length,TableSize,n,m,length)
+    else:
+        raise NotImplementedError("'{0}'".format(difference))
 
     free(cSbox)
 
