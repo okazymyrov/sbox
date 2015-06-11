@@ -37,10 +37,10 @@ EXAMPLES::
 os.environ['SBOX_ROOT'] = os.getcwd()+"/.."
 os.chdir(os.getcwd()+"/..")
 
-load os.environ['SBOX_ROOT'] + "/Cython/CFunc.spyx"
-load os.environ['SBOX_ROOT'] + "/Cython/CPPFunc.spyx"
-load os.environ['SBOX_ROOT'] + "/Sage/GSbox.sage"
-load os.environ['SBOX_ROOT'] + "/Sage/CSbox.sage"
+load(os.environ['SBOX_ROOT'] + "/Cython/CFunc.spyx")
+load(os.environ['SBOX_ROOT'] + "/Cython/CPPFunc.spyx")
+load(os.environ['SBOX_ROOT'] + "/Sage/GSbox.sage")
+load(os.environ['SBOX_ROOT'] + "/Sage/CSbox.sage")
 
 class Sbox(SageObject):
     r"""

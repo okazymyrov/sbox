@@ -16,8 +16,8 @@ AUTHORS:
 #                  http://www.gnu.org/licenses/
 #***************************************************************************** 
 
-load ./Data.sage
-load ./Sbox.sage
+load("./Data.sage")
+load("./Sbox.sage")
 
 def test_temp(**kargs):
     bits=kargs.get('bits',3)
