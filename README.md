@@ -18,7 +18,7 @@ Note that by default bits are interpreted in little endian notation, e.g.
 
 # How to use
 
-1. In Sage. Go to the ''Sage'' directory and type ``load ./Sbox.sage``.
+1. In Sage. Go to the ''Sage'' directory and type ``load("./Sbox.sage")``.
 2. Use externaly (see examples in ''Main.sage'' ).
 
 # Examples
