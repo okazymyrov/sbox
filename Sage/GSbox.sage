@@ -16,12 +16,12 @@ AUTHORS:
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
-#***************************************************************************** 
+#*****************************************************************************
 
 def gen_APN6(self, **kwargs):
     r"""
     Generate APN function for ``n=m=6``
-    
+
     EXAMPLE::
 
         sage: S=Sbox(n=6,m=6)
@@ -30,7 +30,7 @@ def gen_APN6(self, **kwargs):
         True
         sage: S.MDT()
         2
-    
+
     """
     if self._n != 6:
         raise TypeError("n must be equal 6")
@@ -40,22 +40,22 @@ def gen_APN6(self, **kwargs):
     tr=self._P(self.Tr_pol(x=self._P("x"),n=self._n,m=self._n/2))
 
     #M = matrix(GF(2),2*self._n)
-    
+
     M1 = self.l2m(tr.subs(self._P("(%s)*x"%(self._alpha^4))))
     M2 = self.l2m(self._alpha*tr)
     M3 = self.l2m(tr.subs(self._P("(%s)*x"%(self._alpha))))
     M4 = self.l2m(self._alpha*tr.subs(self._P("(%s)*x"%(self._alpha^4))))
-    
+
     #M[:self._n,:self._n] = M1
     #M[:self._n,self._n:] = M2
-    
+
     #print "M:\n{0}".format(M.echelon_form())
 
     #M[:self._n,:self._n] = M3
     #M[:self._n,self._n:] = M4
-    
+
     #print "\nM:\n{0}".format(M.echelon_form())
-    
+
     self._CCZ(G=F,M1=M1,M2=M2,M3=M3,M4=M4)
 
 def gen_CCZ(self,**kwargs):
@@ -64,9 +64,9 @@ def gen_CCZ(self,**kwargs):
 
             Y = M * X
 
-                [  x   ]     [ M1 | M2 ]    [ F1(x) ]
-            X = [------]  M =[---------] Y =[-------]
-                [ G(x) ]     [ M3 | M4 ]    [ F2(x) ]
+               [ F1(x) ]    [ M1 | M2 ]     [  x   ]
+            Y =[-------] M =[---------] X = [------]
+               [ F2(x) ]    [ M3 | M4 ]     [ G(x) ]
 
             F = F2(F1_1(x))
 
@@ -135,11 +135,32 @@ def gen_CCZ(self,**kwargs):
         M.set_block(self._n,self._n,M4)
 
     else:
-        if M == "random":
+        if (self._n == self._m) and (len(set(tS)) == (self._length)):
+            # Apply the simplified method:
+            # Since F1(x) and G2(x) are EA-equivalent to each other
+            # G2(x) can be used as F1(x)
+            # M1*X + M2*F1(X) = G(X)
+            # M2*F1(X) = M1*X + G(X)
+            # F1(X) = M2^{-1}*M1*X + M2^{-1}*G(X) # tS is G
+            while true:
+                M = random_matrix(GF(2),2*self._n,self._n+self._m,algorithm='echelonizable',rank=2*self._n)
 
-            E = identity_matrix(GF(2),self._n)
-            Z = zero_matrix(GF(2),self._n)
+                M1 = M[0:self._n,0:self._n]
+                M2 = M[0:self._n,self._n:self._n+self._m]
 
+                if M2.rank() == self._n:
+                    break
+
+            M12 = block_matrix(GF(2),1,2,[M2.inverse()*M1,M2.inverse()],subdivide=False)
+
+            for x in xrange(self._length):
+                X = vector(ZZ(x).digits(base=2,padto=self._n)+ZZ(tS[x]).digits(base=2,padto=self._m))
+                X = X.column()
+                X = M12*X
+                X = X.list()
+                tS[x] = ZZ(X[0:self._n],2)
+
+        else: # generate random M1, M2, M3 and M4
             while True:
                 self._S=[-1 for g in xrange(self._length)]
 
@@ -180,7 +201,7 @@ def gen_CCZ(self,**kwargs):
 def gen_dickson(self, **kwargs):
     r"""
     Generate a Dickson polynomial, which is a permutation polynomial [LIDL]
-    
+
     EXAMPLE::
 
         sage: S=Sbox(n=5,m=5)
@@ -209,7 +230,7 @@ def gen_dickson(self, **kwargs):
 def gen_dobbertin(self, **kwargs):
     r"""
     Generate Dobbertin's polynomial. ``\delta``-uniformity equals 2 for odd ``n``.
-    
+
     EXAMPLE::
 
         sage: S=Sbox(n=5,m=5)
@@ -249,10 +270,10 @@ def gen_EA(self, **kwargs):
 
         sage: S.get_linear_functions() # random
         [
-        [1 0 1 0 0]  [0 1 0 1 1]  [0 1 1 1 1]                 
-        [0 1 1 0 0]  [1 0 0 1 0]  [1 0 0 1 0]                 
-        [0 0 0 0 1]  [1 0 1 1 0]  [1 1 1 0 1]                 
-        [0 0 1 1 1]  [0 0 0 0 1]  [1 1 0 1 0]                 
+        [1 0 1 0 0]  [0 1 0 1 1]  [0 1 1 1 1]
+        [0 1 1 0 0]  [1 0 0 1 0]  [1 0 0 1 0]
+        [0 0 0 0 1]  [1 0 1 1 0]  [1 1 1 0 1]
+        [0 0 1 1 1]  [0 0 0 0 1]  [1 1 0 1 0]
         [0 0 0 1 1], [0 0 1 1 0], [0 1 0 0 1], (1, 0, 0, 1, 0),
 
         (0, 0, 0, 1, 0)
@@ -268,10 +289,10 @@ def gen_EA(self, **kwargs):
         sage: S.generate_sbox(method='polynomial',G='x^3',T='EA',M1=random_matrix(GF(2),5,5,algorithm='echelonizable',rank=5))
         sage: S.get_linear_functions() # random
         [
-        [0 0 1 1 1]                        
-        [1 0 0 1 0]                        
-        [1 1 1 1 0]                        
-        [1 1 1 0 0]                        
+        [0 0 1 1 1]
+        [1 0 0 1 0]
+        [1 1 1 1 0]
+        [1 1 1 0 0]
         [0 0 0 0 1], None, None, None, None
         ]
 
@@ -282,13 +303,13 @@ def gen_EA(self, **kwargs):
         True
     """
     G = self.g2p(kwargs.get('G',None))
-    
+
     M1 = kwargs.get('M1',None)
     V1 = kwargs.get('V1',None)
     M2 = kwargs.get('M2',None)
     V2 = kwargs.get('V2',None)
     M3 = kwargs.get('M3',None)
-    
+
     if G == None:
         if self._S is not None:
             G = self.interpolation_polynomial(representation="internal")
@@ -323,7 +344,7 @@ def gen_EA(self, **kwargs):
     if V1 == "random":
         V1=random_vector(GF(2),self._m)
     elif V1 is not None:
-        V1=vector(GF(2),V1)    
+        V1=vector(GF(2),V1)
 
     if V2 == "random":
         V2=random_vector(GF(2),self._n)
@@ -396,7 +417,7 @@ def gen_inverse(self, **kwargs):
         True
     """
     self._polynomial=self._P("x^(2^({0}-1)-1)".format(self._m))
-    
+
 def gen_kasami(self, **kwargs):
     r"""
     Generate Kasami's polynomial. ``\delta``-uniformity equals 2 for odd ``n``.

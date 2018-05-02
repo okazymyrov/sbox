@@ -14,7 +14,7 @@ AUTHORS:
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
-#***************************************************************************** 
+#*****************************************************************************
 
 load("./Data.sage")
 load("./Sbox.sage")
@@ -24,7 +24,8 @@ def test_temp(**kargs):
 
     S=Sbox(n=bits,m=bits)
 
-    S.generate_sbox(method='APN6')
+    # S.generate_sbox(method='APN6')
+    S.generate_sbox(method='inverse',T="CCZ")
 
     print "Sbox\t\t\t\t: {0}".format(S.get_sbox())
     print ""
@@ -92,6 +93,5 @@ def test_all_functions(**kargs):
         print "Check system\t\t\t: {0}".format(S.check_system(degree=ret[0]))
         print "~"*40
         print ""
-                
-    return 0
 
+    return 0

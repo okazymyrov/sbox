@@ -16,7 +16,7 @@ AUTHORS:
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
-#***************************************************************************** 
+#*****************************************************************************
 
 os.chdir(os.path.split(os.path.abspath(sys.argv[0]))[0] + "/Sage")
 
