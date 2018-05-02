@@ -1,3 +1,7 @@
+# distutils: language = c
+# distutils: include_dirs = ./C/
+# distutils: sources = ./C/AC.c ./C/CI.c ./C/SSI.c ./C/AlgebraicImmunity.c ./C/MLT.c ./C/MDT.c ./C/tools_functions.c ./C/matrix.c ./C/MinimumDegree.c ./C/PC.c
+
 r"""
     The interface for calling "c" functions
 
@@ -12,18 +16,13 @@ AUTHORS:
 """
 
 #*****************************************************************************
-#       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
+#       Copyright (C) 2013 Oleksandr Kazymyrov <okazymyrov@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************
-
-#clang c
-#cinclude $SBOX_ROOT/C/
-#cfile ./C/tools_functions.c ./C/matrix.c ./C/MDT.c ./C/AC.c ./C/AlgebraicImmunity.c ./C/MLT.c
-#cfile ./C/MinimumDegree.c ./C/PC.c ./C/SSI.c ./C/CI.c
 
 from sage.all import ZZ
 from sage.all import log

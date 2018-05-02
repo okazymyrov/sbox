@@ -1,3 +1,7 @@
+# distutils: language = c++
+# distutils: include_dirs = ./CPP/
+# distutils: sources = ./CPP/Cycles.cpp ./CPP/FixedPoints.cpp
+
 r"""
     The interface for calling "cpp" functions
 
@@ -9,17 +13,13 @@ AUTHORS:
 """
 
 #*****************************************************************************
-#       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
+#       Copyright (C) 2013 Oleksandr Kazymyrov <okazymyrov@gmail.com>
 #
 #  Distributed under the terms of the GNU General Public License (GPL)
 #  as published by the Free Software Foundation; either version 2 of
 #  the License, or (at your option) any later version.
 #                  http://www.gnu.org/licenses/
 #*****************************************************************************    
-
-#clang c++
-#cinclude $SBOX_ROOT/CPP/
-#cfile ./CPP/Cycles.cpp ./CPP/FixedPoints.cpp
 
 import os
 from sage.all import ZZ

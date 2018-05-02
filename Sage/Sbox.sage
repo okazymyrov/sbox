@@ -24,7 +24,7 @@ EXAMPLES::
 """
 
 #******************************************************************************
-#       Copyright (C) 2013 Oleksandr Kazymyrov <oleksandr.kazymyrov@ii.uib.no>
+#       Copyright (C) 2013 Oleksandr Kazymyrov <okazymyrov@gmail.com>
 #                     2013 Maksim Storetvedt <Maksim.Storetvedt@student.uib.no>
 #                     2013 Anna Maria Eilertsen <Anna.Eilertsen@student.uib.no>
 #
