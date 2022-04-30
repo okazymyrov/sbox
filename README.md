@@ -10,11 +10,12 @@ Note that by default bits are interpreted in little endian notation, e.g.
 
 > 10<sub>10</sub> = 1010<sub>2</sub> = A<sub>16</sub>
 
-# Authors
+# Contributors
 
 - Oleksandr Kazymyrov
 - Maksim Storetvedt
 - Anna Maria Eilertsen
+- Mark Hetherington
 
 # How to use
 
