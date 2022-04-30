@@ -80,7 +80,7 @@ def cr_check_polynomial(self):
     if self._polynomial is None:
         self.interpolation_polynomial(representation="internal")
 
-    if [(self._polynomial.subs(self._K(ZZ(i).digits(2)))).integer_representation() for i in xrange(self._length)] == self._S:
+    if [(self._polynomial.subs(self._K(ZZ(i).digits(2)))).integer_representation() for i in range(self._length)] == self._S:
         return True
     else:
         return False
@@ -160,7 +160,7 @@ def cr_create_system(self, degree=2, groebner=False):
     gens = X+Y
 
     bits = []
-    for i in xrange(self._length):
+    for i in range(self._length):
         bits.append( list(reversed(ZZ(i).digits(base=2,padto=self._n))) + list(reversed(ZZ(self._S[i]).digits(base=2,padto=self._m))) )
 
     nrows = self._length
@@ -169,14 +169,14 @@ def cr_create_system(self, degree=2, groebner=False):
     A = Matrix(GF(2), nrows , ncols)
 
     exponents = []
-    for d in xrange(degree+1):
+    for d in range(degree+1):
         exponents += IntegerVectors(d, max_length=self._n+self._m, min_length=self._n+self._m, min_part=0, max_part=1).list()
 
     col = 0
     variables = []
     for exponent in exponents:
         variables.append( mul([gens[i]**exponent[i] for i in range(len(exponent))]))
-        for row in xrange(self._length):
+        for row in range(self._length):
             A[row,col] = mul([bits[row][i] for i in range(len(exponent)) if exponent[i]])
         col +=1
 
@@ -185,8 +185,8 @@ def cr_create_system(self, degree=2, groebner=False):
 
     gens=[]
     length=len(variables)
-    for j in xrange(len(system.rows())):
-        gens.append(sum(variables[i]*system[j][i] for i in xrange(length)) )
+    for j in range(len(system.rows())):
+        gens.append(sum(variables[i]*system[j][i] for i in range(length)) )
 
     return gens
 
@@ -299,13 +299,13 @@ def cr_cycles(self,**kargs):
     if graph == True:
         e = []
         for c in cycles:
-            for a,b in [(c[i], c[i+1]) for i in xrange(len(c)-1)]:
+            for a,b in [(c[i], c[i+1]) for i in range(len(c)-1)]:
                 e.append([a,b])
 
         e = [list(i) for i in set([tuple(i) for i in e])]
 
         g = DiGraph({}, loops=True, multiedges=True)
-        for i in xrange(len(e)):
+        for i in range(len(e)):
             g.add_edge(e[i][0], e[i][1])
 
         g.graphviz_to_file_named(kargs.get('file','cycles.dot'))
@@ -516,8 +516,8 @@ def cr_difference_distribution_matrix(self):
 
     A = Matrix(ZZ, nrows, ncols)
 
-    for x1 in xrange(nrows):
-        for x2 in xrange(nrows):
+    for x1 in range(nrows):
+        for x2 in range(nrows):
             A[ x1^^x2 , self._S[x1]^^self._S[x2]] += 1
 
     return A
@@ -547,7 +547,7 @@ def cr_interpolation_polynomial(self, representation="generator"):
             return self.p2g(pol=self._polynomial)
 
     l = []
-    for i in xrange(self._length):
+    for i in range(self._length):
         l.append( (self._K(ZZ(i).digits(2)), self._K(ZZ(self._S[i]).digits(2))) )
 
     self._polynomial = self._P.lagrange_polynomial(l)
@@ -609,8 +609,8 @@ def cr_is_APN(self, mode="c"):
     if mode == "sage":
         T = zero_vector(ZZ,self._length)
 
-        for d in xrange(1,self._length):
-            for x in xrange(self._length):
+        for d in range(1,self._length):
+            for x in range(self._length):
                 T[self._S[x]^^self._S[x^^d]] += 1
             if len([i for i in T if i > 2]) != 0:
                 return False
@@ -653,11 +653,11 @@ def cr_is_CCZ_equivalent(self,F=None,G=None):
     polF=self.g2p(F)
     polG=self.g2p(G)
 
-    M=Matrix(GF(2), self._length, self._n + self._m + 1, [[1]+ZZ(i).digits(2,padto=self._n)+vector(polF.subs(self._K.fetch_int(i))).list() for i in xrange(self._length)])
+    M=Matrix(GF(2), self._length, self._n + self._m + 1, [[1]+ZZ(i).digits(2,padto=self._n)+vector(polF.subs(self._K.fetch_int(i))).list() for i in range(self._length)])
     M=M.transpose()
     CF=LinearCode(M)
     
-    M=Matrix(GF(2), self._length, self._n + self._m + 1, [[1]+ZZ(i).digits(2,padto=self._n)+vector(polG.subs(self._K.fetch_int(i))).list() for i in xrange(self._length)])
+    M=Matrix(GF(2), self._length, self._n + self._m + 1, [[1]+ZZ(i).digits(2,padto=self._n)+vector(polG.subs(self._K.fetch_int(i))).list() for i in range(self._length)])
     M=M.transpose()
     CG=LinearCode(M)
 

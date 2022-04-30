@@ -32,8 +32,8 @@ def main(argv=None):
 
     t2=cputime()
 
-    print "====="
-    print "Time = {0}".format(t2-t1)
+    print("=====")
+    print("Time = {0}".format(t2-t1))
 
 
 if __name__ == "__main__":

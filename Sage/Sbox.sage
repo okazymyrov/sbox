@@ -219,7 +219,7 @@ class Sbox(SageObject):
             sage: [i for i in S]
             [4, 5, 6, 7, 0, 1, 2, 3]
         """
-        for i in xrange(self._length):
+        for i in range(self._length):
             yield self(i)
 
     def _repr_(self):
@@ -549,7 +549,7 @@ class Sbox(SageObject):
 
         M=matrix(GF(2),self._n,self._m)
 
-        for i in xrange(self._n):
+        for i in range(self._n):
             M.set_column(i,L.subs(self._K(ZZ(2^i).digits(2)))._vector_())
 
         return M
@@ -576,14 +576,14 @@ class Sbox(SageObject):
             raise TypeError("M is not defined")
 
         T = matrix(self._K,self._n)
-        C = vector(self._K,self._n,[self._K(M.column(g)) for g in xrange(self._n)])
+        C = vector(self._K,self._n,[self._K(M.column(g)) for g in range(self._n)])
 
-        for i in xrange(self._n):
-            T.set_row(i,[self._K.fetch_int(2^i)^(2^g) for g in xrange(self._n)])
+        for i in range(self._n):
+            T.set_row(i,[self._K.fetch_int(2^i)^(2^g) for g in range(self._n)])
 
         T = (T.inverse()*C).list()
 
-        L = sum([self._P("({0})*x^(2^{1})".format(T[g],g)) for g in xrange(len(T))])
+        L = sum([self._P("({0})*x^(2^{1})".format(T[g],g)) for g in range(len(T))])
 
         if representation == "internal":
             return L
@@ -615,7 +615,7 @@ class Sbox(SageObject):
             return "None"
 
         g_pol = ""
-        for i in xrange(self._length-1,1,-1):
+        for i in range(self._length-1,1,-1):
             if pol[i] != 0:
                 t = pol[i].log(self._K.multiplicative_generator())
                 if t == 1:
@@ -714,7 +714,7 @@ class Sbox(SageObject):
         if n is None:
             n=x.parent().degree()
 
-        return sum([x^(2^(i*m)) for i in xrange(n/m)])
+        return sum([x^(2^(i*m)) for i in range(n/m)])
 
     def Tr_pol(self,x=None,n=None,m=None):
         r"""
@@ -756,7 +756,7 @@ class Sbox(SageObject):
         if n is None:
             n=x.parent().base().degree()
 
-        pol=sum([x^(2^(i*m)) for i in xrange(n/m)])
+        pol=sum([x^(2^(i*m)) for i in range(n/m)])
         pol = pol.mod(self._P("x^{0}+x".format(self._length)))
 
         return pol

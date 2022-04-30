@@ -54,7 +54,7 @@ def cpp_cycles(pSbox,length):
     cdef mMap[long long, pV] cycles
     cdef long long *cSbox = <long long *>malloc(length*sizeof(long long))
 
-    for i in xrange(length):
+    for i in range(length):
         cSbox[i] = pSbox[i]
 
     cycles = findCycles(cSbox, length)
@@ -90,7 +90,7 @@ def cpp_fixed_points(pSbox,length):
     cdef vector[unsigned long long] fPoints
     cdef unsigned long long *cSbox = <unsigned long long *>malloc(length*sizeof(unsigned long long))
 
-    for i in xrange(length):
+    for i in range(length):
         cSbox[i] = pSbox[i]
 
     fPoints = fixedPoints(cSbox,length)
@@ -99,7 +99,7 @@ def cpp_fixed_points(pSbox,length):
 
     ret = []
 
-    for i in xrange(fPoints.size()):
+    for i in range(fPoints.size()):
         ret.append(ZZ(fPoints[i]))
 
     return ret 
