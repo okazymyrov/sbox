@@ -61,8 +61,8 @@ def c_absolute_indicator(pSbox,length):
     ac=0
     ret_ac=0
 
-    for j in xrange(1,length):
-        for i in xrange(length):
+    for j in range(1,length):
+        for i in range(length):
             fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
         ac=AC(fSbox, length)
         if ac > ret_ac:
@@ -88,22 +88,22 @@ def c_algebraic_immunity_sbox(pSbox,length,SboxBitIn,SboxBitOut):
     """
     cdef char **fSbox = <char **>malloc(SboxBitOut*sizeof(char*))
 
-    for j in xrange(SboxBitOut):
+    for j in range(SboxBitOut):
         fSbox[j] = <char *>malloc(length*sizeof(char))
 
-    for j in xrange(SboxBitOut):
-        for i in xrange(length):
+    for j in range(SboxBitOut):
+        for i in range(length):
             fSbox[j][i] = (ZZ(pSbox[i]&(1<<j)).popcount())&1
 
     d=0
     num_of_eq=0
 
-    for d in xrange(1,length):
+    for d in range(1,length):
         num_of_eq = algebraic_immunity(fSbox,d,length,SboxBitIn,SboxBitOut)
         if num_of_eq != 0:
             break
 
-    for j in xrange(SboxBitOut):
+    for j in range(SboxBitOut):
         free(fSbox[j])
 
     free(fSbox)
@@ -121,7 +121,7 @@ def c_is_balanced(pSbox,length,SboxBitOut):
         - ``SboxBitOut`` -- number of out-bits ('m')
     
     """
-    for j in xrange(1,1<<SboxBitOut):
+    for j in range(1,1<<SboxBitOut):
         if [(ZZ(s&j).popcount())&1 for s in pSbox].count(1)  != (length>>1):
             return False
 
@@ -145,9 +145,9 @@ def c_CI(pSbox,length):
     ci=1
     ret_ci=0
 
-    for m in xrange(1,length):
-        for j in xrange(1,length):
-            for i in xrange(length):
+    for m in range(1,length):
+        for j in range(1,length):
+            for i in range(length):
                 fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
             ci&=CI(m, fSbox, length)
         if ci == 0:
@@ -174,7 +174,7 @@ def c_is_APN(pSbox,length,TableSize):
     """
     cdef unsigned long long *cSbox = <unsigned long long *>malloc(length*sizeof(unsigned long long))
 
-    for i in xrange(length):
+    for i in range(length):
         cSbox[i] = pSbox[i]
 
     ret_val = d_uniform_xor_xor(cSbox,length,TableSize,2)
@@ -202,7 +202,7 @@ def c_MDT(pSbox,n,m,difference):
 
     cdef unsigned long long *cSbox = <unsigned long long *>malloc(length*sizeof(unsigned long long))
 
-    for i in xrange(length):
+    for i in range(length):
         cSbox[i] = pSbox[i]
 
     if difference == 'XORXOR':
@@ -241,8 +241,8 @@ def c_minimum_degree(pSbox,n,m):
     d=0
     ret_deg = n
 
-    for j in xrange(1,length_m):
-        for i in xrange(length_n):
+    for j in range(1,length_m):
+        for i in range(length_n):
             fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
         d = minimum_degree(fSbox, length_n)
         if d < ret_deg:
@@ -268,7 +268,7 @@ def c_MLT(pSbox,SboxBitIn,SboxBitOut):
     """
     cdef unsigned long long *cSbox = <unsigned long long *>malloc((1<<SboxBitIn)*sizeof(unsigned long long))
 
-    for i in xrange(1<<SboxBitIn):
+    for i in range(1<<SboxBitIn):
         cSbox[i] = pSbox[i]
 
     ret_val=c_lambda(cSbox,SboxBitIn,SboxBitOut)
@@ -295,9 +295,9 @@ def c_PC(pSbox,length):
     pc=1
     ret_pc=0
 
-    for k in xrange(1,length):
-        for j in xrange(1,length):
-            for i in xrange(length):
+    for k in range(1,length):
+        for j in range(1,length):
+            for i in range(length):
                 fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
             pc&=PC(k, fSbox, length)
         if pc == 0:
@@ -326,8 +326,8 @@ def c_SSI(pSbox,length):
     ssi=0
     ret_ssi=0
 
-    for j in xrange(1,length):
-        for i in xrange(length):
+    for j in range(1,length):
+        for i in range(length):
             fSbox[i] = (ZZ(pSbox[i]&j).popcount())&1
         ssi=SumOfSquares(fSbox, length)
         if ssi > ret_ssi:

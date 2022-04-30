@@ -119,7 +119,7 @@ def gen_CCZ(self,**kwargs):
         else:
             G = self._P("x")
 
-    tS = [G.subs(self._K.fetch_int(g)).integer_representation() for g in xrange(self._length)]
+    tS = [G.subs(self._K.fetch_int(g)).integer_representation() for g in range(self._length)]
 
     if ('M1' in kwargs) or ('M2' in kwargs) or ('M3' in kwargs) or ('M4' in kwargs):
         M1=kwargs.get('M1',identity_matrix(GF(2),self._n))
@@ -153,7 +153,7 @@ def gen_CCZ(self,**kwargs):
 
             M12 = block_matrix(GF(2),1,2,[M2.inverse()*M1,M2.inverse()],subdivide=False)
 
-            for x in xrange(self._length):
+            for x in range(self._length):
                 X = vector(ZZ(x).digits(base=2,padto=self._n)+ZZ(tS[x]).digits(base=2,padto=self._m))
                 X = X.column()
                 X = M12*X
@@ -162,11 +162,11 @@ def gen_CCZ(self,**kwargs):
 
         else: # generate random M1, M2, M3 and M4
             while True:
-                self._S=[-1 for g in xrange(self._length)]
+                self._S=[-1 for g in range(self._length)]
 
                 M12 = random_matrix(GF(2),self._n,self._n+self._m,algorithm='echelonizable',rank=self._n)
 
-                for x in xrange(self._length):
+                for x in range(self._length):
                     X = vector(ZZ(x).digits(base=2,padto=self._n)+ZZ(tS[x]).digits(base=2,padto=self._m))
                     X = X.column()
                     X = M12*X
@@ -183,9 +183,9 @@ def gen_CCZ(self,**kwargs):
 
                     break
 
-    self._S=[-1 for g in xrange(self._length)]
+    self._S=[-1 for g in range(self._length)]
 
-    for x in xrange(self._length):
+    for x in range(self._length):
         X = vector(ZZ(x).digits(base=2,padto=self._n)+ZZ(tS[x]).digits(base=2,padto=self._m))
         X = X.column()
         X = M*X
@@ -223,7 +223,7 @@ def gen_dickson(self, **kwargs):
 
     x=self._P.gen()
 
-    self._polynomial=sum(GF(2)((k/(k-j))*binomial(k-j,j))*((-self._alpha)^j)*(x^(k-2*j)) for j in xrange(floor(k/2)+1))
+    self._polynomial=sum(GF(2)((k/(k-j))*binomial(k-j,j))*((-self._alpha)^j)*(x^(k-2*j)) for j in range(floor(k/2)+1))
 
     self._polynomial=self._polynomial.mod(self._P("x^%d+x"%(self._length)))
 
@@ -361,14 +361,14 @@ def gen_EA(self, **kwargs):
 
     self._LFoEA = [M1,M2,M3,V1,V2]
 
-    for i in xrange(self._length):
+    for i in range(self._length):
         self._S[i]=vector(GF(2),ZZ(i).digits(base=2,padto=self._n))
 
         if M2 is not None:
             self._S[i]=M2*self._S[i]
 
         if V2 is not None:
-            self._S[i]=vector(GF(2),[ZZ(self._S[i][j]) ^^ ZZ(V2.get(j)) for j in xrange(len(self._S[i]))])
+            self._S[i]=vector(GF(2),[ZZ(self._S[i][j]) ^^ ZZ(V2.get(j)) for j in range(len(self._S[i]))])
 
         self._S[i]=self._K(PolynomialRing(GF(2),'x')(self._S[i].list()).mod(self._K.modulus()).list())
         self._S[i]=G.subs(self._S[i])
@@ -379,10 +379,10 @@ def gen_EA(self, **kwargs):
 
         if M3 is not None:
             tx=M3*vector(GF(2),ZZ(i).digits(base=2,padto=self._m))
-            self._S[i]=vector(GF(2),[ZZ(self._S[i].get(j)) ^^ ZZ(tx.get(j)) for j in xrange(len(self._S[i]))])
+            self._S[i]=vector(GF(2),[ZZ(self._S[i].get(j)) ^^ ZZ(tx.get(j)) for j in range(len(self._S[i]))])
 
         if V1 is not None:
-            self._S[i]=vector(GF(2),[ZZ(self._S[i].get(j)) ^^ ZZ(V1.get(j)) for j in xrange(len(self._S[i]))])
+            self._S[i]=vector(GF(2),[ZZ(self._S[i].get(j)) ^^ ZZ(V1.get(j)) for j in range(len(self._S[i]))])
 
         self._S[i]=ZZ(self._S[i].list(),2)
 
@@ -521,7 +521,7 @@ def gen_random_substitution(self, **kwargs):
         [2, 4, 7, 7, 4, 5, 2, 7]
 
     """
-    self._S = [randint(0,(1<<self._m)-1) for _ in xrange(self._length)]
+    self._S = [randint(0,(1<<self._m)-1) for _ in range(self._length)]
 
 def gen_random_permutation(self, **kwargs):
     r"""
