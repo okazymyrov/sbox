@@ -320,7 +320,7 @@ def gen_EA(self, **kwargs):
         else:
             G = self._P("x")
 
-    self._S=range(self._length)
+    self._S=list(range(self._length))
 
     if M1 == "random":
         M1=random_matrix(GF(2),self._m,self._m)
