@@ -86,7 +86,7 @@ inline void SUMSUB_TA(long long *col, long long i1, long long j1, long long i2, 
     }
 }
 
-inline void CALC_TA(long long *col, size_t len, long long i, long long j)
+void CALC_TA(long long *col, size_t len, long long i, long long j)
 {
     long long k;
     if(j - i > 2)
