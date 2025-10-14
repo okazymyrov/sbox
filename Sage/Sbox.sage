@@ -544,7 +544,7 @@ class Sbox(SageObject):
         if L is None:
             raise TypeError("L is not defined")
 
-        if isinstance(L,basestring):
+        if isinstance(L,str):
             L = self.g2p(L)
 
         M=matrix(GF(2),self._n,self._m)
